@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { program } from 'commander';
 import { resolve } from 'node:path';
 import { loadConfig } from './config.js';

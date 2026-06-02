@@ -20,7 +20,7 @@ export type PipelineContext = {
   issueKey: string;
   repoRoot: string;
   config: Config;
-  branchName: string;
+  branchName?: string;
   requirements?: Requirements;
   slices?: Slice[];
 };

@@ -1,4 +1,5 @@
 import { query } from '@anthropic-ai/claude-agent-sdk';
+import type { SDKResultError } from '@anthropic-ai/claude-agent-sdk';
 import type { PipelineContext, Slice } from '../types.js';
 
 export async function runImplementationPhase(
@@ -38,7 +39,7 @@ Implement this slice now.
     for await (const message of session) {
       if (message.type === 'result' && message.subtype !== 'success') {
         throw new Error(
-          `Implementation failed on slice "${slice.name}": ${(message as any).errors?.join(', ')}`
+          `Implementation failed on slice "${slice.name}": ${(message as SDKResultError).errors.join(', ')}`
         );
       }
     }

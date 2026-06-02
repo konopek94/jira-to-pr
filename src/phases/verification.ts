@@ -1,4 +1,5 @@
 import { query } from '@anthropic-ai/claude-agent-sdk';
+import type { SDKResultSuccess } from '@anthropic-ai/claude-agent-sdk';
 import type { PipelineContext } from '../types.js';
 
 const RETRY_LIMIT = 3;
@@ -56,7 +57,7 @@ If you cannot fix the failures, output "VERIFICATION_FAILED: <reason>".
       if (message.subtype !== 'success') {
         return false;
       }
-      lastResult = (message as any).result;
+      lastResult = (message as SDKResultSuccess).result;
     }
   }
 

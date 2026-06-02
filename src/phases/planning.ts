@@ -1,4 +1,5 @@
 import { query } from '@anthropic-ai/claude-agent-sdk';
+import type { SDKResultError, SDKResultSuccess } from '@anthropic-ai/claude-agent-sdk';
 import { mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import type { PipelineContext, Requirements, Slice } from '../types.js';
@@ -90,9 +91,9 @@ Keep slices small and independently testable. Aim for 2-5 slices for most tasks.
   for await (const message of session) {
     if (message.type === 'result') {
       if (message.subtype !== 'success') {
-        throw new Error(`Planning phase failed: ${(message as any).errors?.join(', ')}`);
+        throw new Error(`Planning phase failed: ${(message as SDKResultError).errors.join(', ')}`);
       }
-      const output = (message as any).structured_output as PlanningOutput;
+      const output = (message as SDKResultSuccess).structured_output as PlanningOutput;
       return output.slices;
     }
   }

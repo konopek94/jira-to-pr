@@ -1,4 +1,5 @@
 import { query } from '@anthropic-ai/claude-agent-sdk';
+import type { SDKResultError, SDKResultSuccess } from '@anthropic-ai/claude-agent-sdk';
 import type { PipelineContext, Requirements } from '../types.js';
 import { buildJiraMcpConfig } from '../mcp.js';
 
@@ -46,9 +47,9 @@ If the issue is very vague, still proceed and list what you understood as assump
   for await (const message of session) {
     if (message.type === 'result') {
       if (message.subtype !== 'success') {
-        throw new Error(`Requirements phase failed: ${(message as any).errors?.join(', ')}`);
+        throw new Error(`Requirements phase failed: ${(message as SDKResultError).errors.join(', ')}`);
       }
-      return (message as any).structured_output as Requirements;
+      return (message as SDKResultSuccess).structured_output as Requirements;
     }
   }
 

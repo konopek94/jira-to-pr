@@ -19,6 +19,11 @@ export async function createBranch(repoRoot: string, branchName: string): Promis
   await git.checkoutLocalBranch(branchName);
 }
 
+export async function pushBranch(repoRoot: string, branchName: string): Promise<void> {
+  const git = simpleGit(repoRoot);
+  await git.push(['--set-upstream', 'origin', branchName]);
+}
+
 export async function commitPlanFile(repoRoot: string, issueKey: string): Promise<void> {
   const git = simpleGit(repoRoot);
   await git.add(`docs/plan-${issueKey}.md`);
